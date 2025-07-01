@@ -116,7 +116,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.topContent}>
-              <Text style={globalStyles.title}>Let's Verify KYC</Text>
+              <Text style={globalStyles.title}>Let&apos;s Verify KYC</Text>
               <Text style={globalStyles.subtitle}>
                 Keep the following documents ready
               </Text>
@@ -142,7 +142,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
                 onPress={handleStartKYC}
                 activeOpacity={0.8}
               >
-                <Text style={globalStyles.buttonText}>Let's Start</Text>
+                <Text style={globalStyles.buttonText}>Let&apos;s Start</Text>
               </TouchableOpacity>
             </View>
           </View>

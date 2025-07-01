@@ -12,22 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { globalStyles, colors } from "../../styles/globalStyles";
 import StackedCard from "../molecules/StackedCard";
 import GradientBackground from "../molecules/GradientBackground";
-
-const SelectableListItem = ({ label, icon, isSelected, onPress }) => (
-  <TouchableOpacity
-    style={styles.selectableItem}
-    onPress={onPress}
-    activeOpacity={0.7}
-  >
-    <View style={globalStyles.documentIcon}>
-      <Ionicons name={icon} size={20} color={colors.white} />
-    </View>
-    <Text style={styles.selectableLabel}>{label}</Text>
-    <View style={[styles.radio, isSelected && styles.radioSelected]}>
-      {isSelected && <View style={styles.radioInner} />}
-    </View>
-  </TouchableOpacity>
-);
+import { SelectableListItem } from "../molecules/SelecetableListItem";
 
 const SourceOfFundsScreen = ({ navigation }) => {
   const [selectedSources, setSelectedSources] = useState([]);
@@ -85,7 +70,7 @@ const SourceOfFundsScreen = ({ navigation }) => {
           <View style={styles.contentContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Text style={globalStyles.title}>
-                What's your source of funds?
+                What&apos;s your source of funds?
               </Text>
               <Text style={globalStyles.subtitle}>Select that apply.</Text>
 

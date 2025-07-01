@@ -50,8 +50,8 @@ const KYCSuccessScreen = ({ navigation }) => {
             <Text style={styles.successTitle}>Hurray!!!</Text>
             <Text style={styles.successSubtitle}>KYC Completed</Text>
             <Text style={styles.thankYouText}>
-              Thanks for submitting your document we'll verify it and complete
-              your KYC as soon as possible
+              Thanks for submitting your document we&apos;ll verify it and
+              complete your KYC as soon as possible
             </Text>
           </View>
 

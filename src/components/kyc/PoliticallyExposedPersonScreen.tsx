@@ -7,7 +7,6 @@ import {
   StatusBar,
   StyleSheet,
   ScrollView,
-  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { globalStyles, colors } from "../../styles/globalStyles";

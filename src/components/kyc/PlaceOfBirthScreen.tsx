@@ -8,7 +8,6 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
-  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -97,7 +96,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
             >
               <Text style={globalStyles.title}>Where you were born?</Text>
               <Text style={globalStyles.subtitle}>
-                Enter the place of birth that's on your passport
+                Enter the place of birth that&apos;s on your passport
               </Text>
 
               <TextInput

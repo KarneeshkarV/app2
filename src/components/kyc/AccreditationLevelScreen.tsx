@@ -12,18 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { globalStyles, colors } from "../../styles/globalStyles";
 import StackedCard from "../molecules/StackedCard";
 import GradientBackground from "../molecules/GradientBackground";
-const SelectableListItem = ({ label, isSelected, onPress }) => (
-  <TouchableOpacity
-    style={styles.selectableItem}
-    onPress={onPress}
-    activeOpacity={0.7}
-  >
-    <Text style={styles.selectableLabel}>{label}</Text>
-    <View style={[styles.radio, isSelected && styles.radioSelected]}>
-      {isSelected && <View style={styles.radioInner} />}
-    </View>
-  </TouchableOpacity>
-);
+import { SelectableListItem } from "../molecules/SelecetableListItem";
+
 const CustomCheckbox = ({ label, value, onValueChange }) => (
   <TouchableOpacity
     style={styles.checkboxContainer}
@@ -87,26 +77,26 @@ const AccreditationLevelScreen = ({ navigation }) => {
           <View style={styles.contentContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Text style={globalStyles.title}>
-                What's your accreditation level?
+                What&apos;s your accreditation level?
               </Text>
               <Text style={styles.subtitle}>Select all that apply.</Text>
 
               <SelectableListItem
                 label="My income was $300,000 or above in the last 12 months."
                 isSelected={incomeLevel}
-                onPress={setIncomeLevel}
+                onPress={() => setIncomeLevel(!incomeLevel)}
               />
 
               <SelectableListItem
                 label="My financial assets exceeds $1 million."
                 isSelected={financialAssets}
-                onPress={setFinancialAssets}
+                onPress={() => setFinancialAssets(!financialAssets)}
               />
 
               <SelectableListItem
                 label="My personal assets (including property) exceed $2 million."
                 isSelected={personalAssets}
-                onPress={setPersonalAssets}
+                onPress={() => setPersonalAssets(!personalAssets)}
               />
 
               <CustomCheckbox
@@ -200,6 +190,42 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 24,
   },
+  // Added missing SelectableListItem styles
+  selectableItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.background,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.borderColor,
+  },
+  selectableLabel: {
+    fontSize: 16,
+    color: colors.black,
+    flex: 1,
+    marginRight: 12,
+  },
+  radio: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: colors.lightGray,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  radioSelected: {
+    borderColor: colors.primary,
+  },
+  radioInner: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: colors.primary,
+  },
+  // Checkbox styles
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "flex-start",

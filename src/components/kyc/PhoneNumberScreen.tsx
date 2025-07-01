@@ -14,19 +14,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { globalStyles, colors } from "../../styles/globalStyles";
 import StackedCard from "../molecules/StackedCard";
 import GradientBackground from "../molecules/GradientBackground";
-
-const CustomCheckbox = ({ label, value, onValueChange }) => (
-  <TouchableOpacity
-    style={styles.checkboxContainer}
-    onPress={() => onValueChange(!value)}
-    activeOpacity={0.7}
-  >
-    <View style={[styles.checkbox, value && styles.checkboxChecked]}>
-      {value && <Ionicons name="checkmark" size={16} color={colors.white} />}
-    </View>
-    <Text style={styles.checkboxLabel}>{label}</Text>
-  </TouchableOpacity>
-);
+import { CustomCheckbox } from "../molecules/CustemCheckBox";
 
 const PhoneNumberScreen = ({ navigation }) => {
   const [phone, setPhone] = useState("");
@@ -94,7 +82,9 @@ const PhoneNumberScreen = ({ navigation }) => {
               keyboardShouldPersistTaps="handled"
               style={styles.scrollContent}
             >
-              <Text style={globalStyles.title}>What's your phone number?</Text>
+              <Text style={globalStyles.title}>
+                What&apos;s your phone number?
+              </Text>
               <Text style={globalStyles.subtitle}>
                 Enter your registered phone number.
               </Text>

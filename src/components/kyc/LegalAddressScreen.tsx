@@ -110,7 +110,7 @@ const LegalAddressScreen = ({ navigation, route }) => {
                 contentContainerStyle={{ flexGrow: 1 }}
               >
                 <Text style={globalStyles.title}>
-                  What's your legal address?
+                  What&apos;s your legal address?
                 </Text>
                 <Text style={globalStyles.subtitle}>Type your address</Text>
 
