@@ -1,18 +1,6 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-  Alert,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { globalStyles, colors } from "../../styles/globalStyles";
-import StackedCard from "../molecules/StackedCard";
-import GradientBackground from "../molecules/GradientBackground";
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { colors } from "../../styles/globalStyles";
 
 const SelectableListItem = ({ label, isSelected, onPress }) => (
   <TouchableOpacity
@@ -28,45 +16,6 @@ const SelectableListItem = ({ label, isSelected, onPress }) => (
 );
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 10,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  stepText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  skipHeaderButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  skipHeaderText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
   selectableItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -101,21 +50,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: colors.primary,
   },
-  bottomContent: {
-    paddingBottom: 20,
-    paddingTop: 20,
-  },
-  privacyContainer: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  privacyText: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: "center",
-  },
-  privacyLink: {
-    color: colors.primary,
-    fontWeight: "500",
-  },
 });
+
+export default SelectableListItem;
