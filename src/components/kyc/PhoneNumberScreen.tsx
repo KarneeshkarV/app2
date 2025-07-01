@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -43,7 +49,9 @@ const PhoneNumberScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{ color: colors.white, fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{ color: colors.white, fontSize: 16, fontWeight: "600" }}
+            >
               Next
             </Text>
           </TouchableOpacity>
@@ -105,7 +113,10 @@ const styles = StyleSheet.create({
     borderRightColor: colors.borderColor,
   },
   dropdownLabel: { fontSize: 16, color: colors.black },
-  dropdownList: { backgroundColor: colors.white, borderColor: colors.borderColor },
+  dropdownList: {
+    backgroundColor: colors.white,
+    borderColor: colors.borderColor,
+  },
   phoneInput: {
     flex: 1,
     paddingHorizontal: 16,

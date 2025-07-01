@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -16,7 +16,7 @@ const SourceOfFundsScreen = ({ navigation }) => {
   const [selected, setSelected] = useState<string[]>([]);
   const toggle = (id: string) =>
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   const isValid = selected.length > 0;
   const handleNext = () => navigation.navigate("EmploymentStatus");
@@ -42,10 +42,13 @@ const SourceOfFundsScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{
-              color: isValid ? colors.white : colors.gray,
-              fontSize: 16, fontWeight: "600"
-            }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               Confirm
             </Text>
           </TouchableOpacity>
@@ -60,7 +63,10 @@ const SourceOfFundsScreen = ({ navigation }) => {
             key={s.id}
             style={[
               styles.item,
-              sel && { backgroundColor: colors.primaryLight, borderColor: colors.primary },
+              sel && {
+                backgroundColor: colors.primaryLight,
+                borderColor: colors.primary,
+              },
             ]}
             onPress={() => toggle(s.id)}
           >
@@ -68,10 +74,7 @@ const SourceOfFundsScreen = ({ navigation }) => {
               name={s.icon}
               size={20}
               color={sel ? colors.primary : colors.white}
-              style={[
-                styles.icon,
-                sel && { backgroundColor: colors.white },
-              ]}
+              style={[styles.icon, sel && { backgroundColor: colors.white }]}
             />
             <Text
               style={[
@@ -82,7 +85,13 @@ const SourceOfFundsScreen = ({ navigation }) => {
               {s.label}
             </Text>
             <View style={[styles.radio, sel && styles.radioSelected]}>
-              {sel && <Ionicons name="checkmark-circle" size={24} color={colors.primary} />}
+              {sel && (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={colors.primary}
+                />
+              )}
             </View>
           </TouchableOpacity>
         );

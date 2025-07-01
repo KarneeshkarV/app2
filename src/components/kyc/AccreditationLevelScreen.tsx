@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -49,10 +49,13 @@ const AccreditationLevelScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{
-              color: isValid ? colors.white : colors.gray,
-              fontSize: 16, fontWeight: "600"
-            }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               FINISH KYC
             </Text>
           </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
@@ -35,10 +35,13 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{
-              color: isValid ? colors.white : colors.gray,
-              fontSize: 16, fontWeight: "600"
-            }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               Confirm
             </Text>
           </TouchableOpacity>
@@ -51,21 +54,15 @@ const PoliticallyExposedPersonScreen = ({ navigation }) => {
         return (
           <TouchableOpacity
             key={o.id}
-            style={[
-              styles.item,
-              sel && { borderColor: colors.primary },
-            ]}
+            style={[styles.item, sel && { borderColor: colors.primary }]}
             onPress={() => setPep(o.id)}
           >
-            <Text
-              style={[
-                styles.label,
-                sel && { color: colors.primary },
-              ]}
-            >
+            <Text style={[styles.label, sel && { color: colors.primary }]}>
               {o.label}
             </Text>
-            <View style={[styles.radio, sel && { borderColor: colors.primary }]}>
+            <View
+              style={[styles.radio, sel && { borderColor: colors.primary }]}
+            >
               {sel && <View style={styles.radioInner} />}
             </View>
           </TouchableOpacity>

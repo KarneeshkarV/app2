@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import {
+  Text,
   TextInput,
   TouchableOpacity,
   Alert,
   StyleSheet,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
@@ -24,7 +24,7 @@ const EmiratesIdScreen = ({ navigation }) => {
     if (!/^\d{3}-\d{4}-\d{7}$/.test(id)) {
       Alert.alert(
         "Invalid ID",
-        "Please enter a valid Emirates ID in XXX-XXXX-XXXXXXX format."
+        "Please enter a valid Emirates ID in XXX-XXXX-XXXXXXX format.",
       );
       return;
     }
@@ -52,9 +52,13 @@ const EmiratesIdScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{ color: isValid ? colors.white : colors.gray,
-                           fontSize: 16,
-                           fontWeight: "600" }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               Next
             </Text>
           </TouchableOpacity>

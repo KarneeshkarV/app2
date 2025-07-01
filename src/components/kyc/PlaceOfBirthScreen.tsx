@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -46,7 +42,9 @@ const PlaceOfBirthScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{ color: colors.white, fontSize: 16, fontWeight: "600" }}>
+            <Text
+              style={{ color: colors.white, fontSize: 16, fontWeight: "600" }}
+            >
               Next
             </Text>
           </TouchableOpacity>

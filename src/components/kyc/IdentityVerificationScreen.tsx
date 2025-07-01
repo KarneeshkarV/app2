@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Alert, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, View, Alert, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -28,11 +28,7 @@ const DocItem = ({ title, subtitle, icon, done, onPress }) => (
     <View style={styles.uploadContainer}>
       {done ? (
         <View style={styles.completed}>
-          <Ionicons
-            name="checkmark-circle"
-            size={24}
-            color={colors.primary}
-          />
+          <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
           <Text style={styles.uploadedText}>Uploaded</Text>
         </View>
       ) : (
@@ -56,13 +52,13 @@ const IdentityVerificationScreen = ({ navigation }) => {
 
   const handleSelfie = () =>
     Alert.alert("Selfie Upload", "Simulate upload?", [
-      { text: "Cancel", style: "cancel"},
-      { text: "OK", onPress: ()=>setSelfie(true) }
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: () => setSelfie(true) },
     ]);
   const handleDoc = () =>
     Alert.alert("Document Upload", "Simulate upload?", [
-      { text: "Cancel", style: "cancel"},
-      { text: "OK", onPress: ()=>setDoc(true) }
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: () => setDoc(true) },
     ]);
   const handleNext = () => {
     if (!isValid) {
@@ -92,11 +88,13 @@ const IdentityVerificationScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{
-              color: isValid ? colors.white : colors.gray,
-              fontSize: 16,
-              fontWeight: "600"
-            }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               {isValid ? "Next" : "Confirm"}
             </Text>
           </TouchableOpacity>

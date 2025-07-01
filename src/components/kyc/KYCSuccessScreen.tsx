@@ -1,5 +1,11 @@
 import React from "react";
-import { TouchableOpacity, View, Text, Dimensions, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SvgXml } from "react-native-svg";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";

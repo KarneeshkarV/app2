@@ -22,7 +22,7 @@ const LegalAddressScreen = ({ navigation }) => {
     if (!isValid) {
       Alert.alert(
         "Please fill all required fields",
-        "All address fields are required to continue."
+        "All address fields are required to continue.",
       );
       return;
     }

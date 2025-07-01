@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
@@ -40,10 +40,13 @@ const EmploymentStatusScreen = ({ navigation }) => {
             onPress={handleNext}
             disabled={!isValid}
           >
-            <Text style={{
-              color: isValid ? colors.white : colors.gray,
-              fontSize: 16, fontWeight: "600"
-            }}>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
               Next
             </Text>
           </TouchableOpacity>
@@ -58,7 +61,10 @@ const EmploymentStatusScreen = ({ navigation }) => {
             key={s.id}
             style={[
               styles.item,
-              selected && { backgroundColor: colors.primaryLight, borderColor: colors.primary },
+              selected && {
+                backgroundColor: colors.primaryLight,
+                borderColor: colors.primary,
+              },
             ]}
             onPress={() => setSel(s.id)}
           >
@@ -81,7 +87,11 @@ const EmploymentStatusScreen = ({ navigation }) => {
             </Text>
             <View style={[styles.radio, selected && styles.radioSelected]}>
               {selected && (
-                <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={colors.primary}
+                />
               )}
             </View>
           </TouchableOpacity>
