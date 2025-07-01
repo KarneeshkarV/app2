@@ -1,3 +1,4 @@
+// src/components/kyc/KYCWelcomeScreen.tsx
 import React from "react";
 import {
   View,
@@ -5,6 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  StyleSheet,
+  Dimensions,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,6 +15,10 @@ import { SvgXml } from "react-native-svg";
 import { globalStyles, colors } from "../../styles/globalStyles";
 import StackedCard from "../molecules/StackedCard";
 import GradientBackground from "../molecules/GradientBackground";
+
+const { width, height } = Dimensions.get("window");
+// match StackedCard’s SHEET_RADIUS
+const BLUR_CARD_RADIUS = 28;
 
 const ShieldCheckIcon = ({ width = 180, height = 180 }) => {
   const svgMarkup = `
@@ -88,7 +95,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
     <SafeAreaView style={globalStyles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       <GradientBackground>
-        {/* Header - Only back button now */}
+        {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
@@ -100,23 +107,30 @@ const KYCWelcomeScreen = ({ navigation }) => {
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <BlurView intensity={0} tint="light" style={styles.logoWrapper}>
-            <ShieldCheckIcon />
-          </BlurView>
+          {/* … your ShieldCheckIcon … */}
         </View>
 
-        {/* Content Card */}
+        {/* ←— our blurred “behind” card */}
+        <BlurView
+          pointerEvents="none"
+          intensity={40}
+          tint="light"
+          style={styles.behindCard}
+        />
+
+        {/* Main StackedCard */}
         <StackedCard topOffset={370}>
           <View style={styles.contentContainer}>
-            {/* Skip button at the top of the card */}
+            {/* Skip button in card */}
             <View style={styles.cardHeader}>
               <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
                 <Text style={styles.skipText}>Skip</Text>
               </TouchableOpacity>
             </View>
 
+            {/* Documents list */}
             <View style={styles.topContent}>
-              <Text style={globalStyles.title}>Let&apos;s Verify KYC</Text>
+              <Text style={globalStyles.title}>Let’s Verify KYC</Text>
               <Text style={globalStyles.subtitle}>
                 Keep the following documents ready
               </Text>
@@ -136,13 +150,14 @@ const KYCWelcomeScreen = ({ navigation }) => {
               </View>
             </View>
 
+            {/* Start button */}
             <View style={styles.bottomContent}>
               <TouchableOpacity
                 style={globalStyles.button}
                 onPress={handleStartKYC}
                 activeOpacity={0.8}
               >
-                <Text style={globalStyles.buttonText}>Let&apos;s Start</Text>
+                <Text style={globalStyles.buttonText}>Let’s Start</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -152,10 +167,9 @@ const KYCWelcomeScreen = ({ navigation }) => {
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    justifyContent: "flex-start", // Changed from space-between to flex-start
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: 20,
@@ -173,6 +187,15 @@ const styles = {
     alignItems: "center",
     paddingVertical: 40,
   },
+  behindCard: {
+    position: "absolute",
+    top: 355, // a bit above the main card’s topOffset (370)
+    left: 12, // inset so it’s slightly narrower
+    right: 12,
+    bottom: 0, // stretch down to bottom
+    borderRadius: BLUR_CARD_RADIUS,
+    overflow: "hidden",
+  },
   contentContainer: {
     flex: 1,
     justifyContent: "space-between",
@@ -185,10 +208,10 @@ const styles = {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.05)", // Subtle background
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
   skipText: {
-    color: colors.primary || "#000", // Use primary color or black
+    color: colors.primary,
     fontSize: 16,
     fontWeight: "500",
   },
@@ -201,6 +224,7 @@ const styles = {
   bottomContent: {
     paddingBottom: 20,
   },
-};
+});
 
 export default KYCWelcomeScreen;
+
