@@ -4,12 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
-
+import { CustomCheckbox } from "../molecules/CustomCheckBox";
 const AccreditationLevelScreen = ({ navigation }) => {
-  const [inc, setInc] = useState(true);
+  const [inc, setInc] = useState(false);
   const [fin, setFin] = useState(false);
   const [pers, setPers] = useState(false);
-  const [acc, setAcc] = useState(true);
+  const [acc, setAcc] = useState(false);
   const isValid = inc || fin || pers || acc;
 
   const handleNext = () => {
@@ -78,16 +78,19 @@ const AccreditationLevelScreen = ({ navigation }) => {
         value={pers}
         onChange={setPers}
       />
-      <Item
-        label="I am an accredited investor under the MAUAE."
-        value={acc}
-        onChange={setAcc}
-      />
+      <View style={styles.accContainer}>
+        <CustomCheckbox
+          label="I am an accredited investor under the MAUAE."
+          value={acc}
+          onValueChange={setAcc}
+        />
+      </View>
     </KycScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
+  accContainer: {},
   chkContainer: {
     flexDirection: "row",
     alignItems: "flex-start",

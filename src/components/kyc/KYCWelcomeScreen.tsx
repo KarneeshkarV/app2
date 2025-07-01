@@ -126,8 +126,8 @@ const KYCWelcomeScreen = ({ navigation }) => {
                     <View style={globalStyles.documentIcon}>
                       <Ionicons
                         name={doc.icon}
-                        size={20}
-                        color={colors.white}
+                        size={30}
+                        color={colors.primary}
                       />
                     </View>
                     <Text style={globalStyles.documentText}>{doc.title}</Text>
@@ -172,20 +172,6 @@ const styles = {
   logoContainer: {
     alignItems: "center",
     paddingVertical: 40,
-  },
-  logoWrapper: {
-    width: 150,
-    height: 150,
-    borderRadius: 150,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    overflow: "hidden",
-    elevation: 8,
   },
   contentContainer: {
     flex: 1,

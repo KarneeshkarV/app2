@@ -61,6 +61,8 @@ const PhoneNumberScreen = ({ navigation }) => {
     >
       <View style={styles.phoneContainer}>
         <DropDownPicker
+          listMode="SCROLLVIEW"
+          scrollViewProps={{ nestedScrollEnabled: true }}
           open={open}
           value={countryCode}
           items={items}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Text,
+  View,
   TextInput,
   TouchableOpacity,
   Alert,
@@ -72,7 +73,7 @@ const BirthdayScreen = ({ navigation }) => {
         </>
       }
     >
-      <StyleSheet.DOBInputs>
+      <View style={styles.dobInputsContainer}>
         <TextInput
           style={[styles.input, styles.day]}
           placeholder="DD"
@@ -100,7 +101,7 @@ const BirthdayScreen = ({ navigation }) => {
           keyboardType="number-pad"
           maxLength={4}
         />
-      </StyleSheet.DOBInputs>
+      </View>
     </KycScreenLayout>
   );
 };
@@ -121,6 +122,11 @@ const styles = StyleSheet.create({
   day: { width: "28%" },
   month: { width: "28%" },
   year: { width: "38%" },
+  dobInputsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
 });
 
 export default BirthdayScreen;

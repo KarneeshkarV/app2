@@ -15,7 +15,7 @@ const statuses = [
 ];
 
 const EmploymentStatusScreen = ({ navigation }) => {
-  const [sel, setSel] = useState<string>("employed");
+  const [sel, setSel] = useState<string>("");
   const isValid = sel != null;
   const handleNext = () => navigation.navigate("PoliticallyExposedPerson");
   const handleSkip = handleNext;

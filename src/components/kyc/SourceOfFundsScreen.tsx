@@ -56,46 +56,42 @@ const SourceOfFundsScreen = ({ navigation }) => {
         </>
       }
     >
-      {sources.map((s) => {
-        const sel = selected.includes(s.id);
-        return (
-          <TouchableOpacity
-            key={s.id}
-            style={[
-              styles.item,
-              sel && {
-                backgroundColor: colors.primaryLight,
-                borderColor: colors.primary,
-              },
-            ]}
-            onPress={() => toggle(s.id)}
-          >
-            <Ionicons
-              name={s.icon}
-              size={20}
-              color={sel ? colors.primary : colors.white}
-              style={[styles.icon, sel && { backgroundColor: colors.white }]}
-            />
-            <Text
+      <View>
+        {sources.map((s) => {
+          const sel = selected.includes(s.id);
+          return (
+            <TouchableOpacity
+              key={s.id}
               style={[
-                styles.label,
-                sel && { color: colors.primary, fontWeight: "600" },
+                styles.item,
+                sel && {
+                  backgroundColor: colors.primaryLight,
+                  borderColor: colors.primary,
+                },
               ]}
+              onPress={() => toggle(s.id)}
             >
-              {s.label}
-            </Text>
-            <View style={[styles.radio, sel && styles.radioSelected]}>
-              {sel && (
-                <Ionicons
-                  name="checkmark-circle"
-                  size={24}
-                  color={colors.primary}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+              <Text
+                style={[
+                  styles.label,
+                  sel && { color: colors.primary, fontWeight: "600" },
+                ]}
+              >
+                {s.label}
+              </Text>
+              <View style={[styles.radio, sel && styles.radioSelected]}>
+                {sel && (
+                  <Ionicons
+                    name="checkmark-circle"
+                    size={24}
+                    color={colors.primary}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </KycScreenLayout>
   );
 };
@@ -136,6 +132,7 @@ const styles = StyleSheet.create({
   },
   radioSelected: {
     borderColor: colors.primary,
+    backgroundColor: colors.primary,
   },
 });
 

@@ -60,6 +60,8 @@ const PlaceOfBirthScreen = ({ navigation }) => {
         onChangeText={setCity}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{ nestedScrollEnabled: true }}
         open={open}
         value={country}
         items={items}

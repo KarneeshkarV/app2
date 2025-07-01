@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export const colors = {
-  primary: "#2ECC71",
+  primary: "#009E49",
   primaryBtn: "#009E49",
   primaryDark: "#27AE60",
   primaryLight: "#E8F8EE",
@@ -88,7 +88,7 @@ export const globalStyles = StyleSheet.create({
   documentItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.background,
+    //backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
@@ -97,7 +97,7 @@ export const globalStyles = StyleSheet.create({
   documentIcon: {
     width: 40,
     height: 40,
-    backgroundColor: colors.primary,
+    //backgroundColor: colors.primary,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",

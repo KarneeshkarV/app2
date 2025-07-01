@@ -75,6 +75,8 @@ const CountrySelectionScreen = ({ navigation, route }) => {
       }
     >
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{ nestedScrollEnabled: true }}
         open={open}
         value={value}
         items={items}
