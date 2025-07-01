@@ -71,7 +71,7 @@ const EmploymentStatusScreen = ({ navigation }) => {
             <Ionicons
               name={s.icon}
               size={20}
-              style={[selected && { backgroundColor: colors.primaryLight}]}
+              style={[selected && { backgroundColor: colors.primaryLight }]}
             />
             <Text
               style={[

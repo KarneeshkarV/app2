@@ -14,6 +14,7 @@ export const PrivacyLink = () => (
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
+    marginBottom: 16,
     alignItems: "center",
   },
   text: {

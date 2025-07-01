@@ -24,8 +24,8 @@ const PhoneNumberScreen = ({ navigation }) => {
     { label: "🇬🇧 +44", value: "+44" },
     { label: "🇮🇳 +91", value: "+91" },
   ]);
-  const isValid = phone.trim().length > 5;
 
+  const isValid = phone.trim().length > 5;
   const handleNext = () => navigation.navigate("PlaceOfBirth");
   const handleSkip = handleNext;
 
@@ -39,6 +39,16 @@ const PhoneNumberScreen = ({ navigation }) => {
       onSkip={handleSkip}
       bottom={
         <>
+          <CustomCheckbox
+            label="Same as logged in phone number."
+            value={same}
+            onValueChange={setSame}
+          />
+          <CustomCheckbox
+            label="Available on WhatsApp at this number for account-related issues."
+            value={whatsapp}
+            onValueChange={setWhatsapp}
+          />
           <TouchableOpacity
             style={{
               backgroundColor: isValid ? colors.primary : colors.lightGray,
@@ -83,16 +93,6 @@ const PhoneNumberScreen = ({ navigation }) => {
           keyboardType="phone-pad"
         />
       </View>
-      <CustomCheckbox
-        label="Same as logged in phone number."
-        value={same}
-        onValueChange={setSame}
-      />
-      <CustomCheckbox
-        label="Available on WhatsApp at this number for account-related issues."
-        value={whatsapp}
-        onValueChange={setWhatsapp}
-      />
     </KycScreenLayout>
   );
 };

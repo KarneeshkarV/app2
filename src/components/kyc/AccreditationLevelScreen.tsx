@@ -5,6 +5,7 @@ import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
+
 const AccreditationLevelScreen = ({ navigation }) => {
   const [inc, setInc] = useState(false);
   const [fin, setFin] = useState(false);
@@ -39,6 +40,11 @@ const AccreditationLevelScreen = ({ navigation }) => {
       onSkip={handleSkip}
       bottom={
         <>
+          <CustomCheckbox
+            label="I am an accredited investor under the MAUAE."
+            value={acc}
+            onValueChange={setAcc}
+          />
           <TouchableOpacity
             style={{
               backgroundColor: isValid ? colors.primaryBtn : colors.lightGray,
@@ -78,19 +84,11 @@ const AccreditationLevelScreen = ({ navigation }) => {
         value={pers}
         onChange={setPers}
       />
-      <View style={styles.accContainer}>
-        <CustomCheckbox
-          label="I am an accredited investor under the MAUAE."
-          value={acc}
-          onValueChange={setAcc}
-        />
-      </View>
     </KycScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  accContainer: {},
   chkContainer: {
     flexDirection: "row",
     alignItems: "flex-start",

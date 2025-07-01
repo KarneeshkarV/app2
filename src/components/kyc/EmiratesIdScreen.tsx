@@ -11,7 +11,7 @@ import { PrivacyLink } from "../molecules/PrivacyLink";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
 import { colors } from "../../styles/globalStyles";
 
-const EmiratesIdScreen = ({ navigation }) => {
+const EmiratesIdScreen = ({ navigation }: any) => {
   const [id, setId] = useState("784-1234-1234567");
   const [agreed, setAgreed] = useState(true);
   const isValid = /^\d{3}-\d{4}-\d{7}$/.test(id) && agreed;
@@ -30,6 +30,7 @@ const EmiratesIdScreen = ({ navigation }) => {
     }
     navigation.navigate("SourceOfFunds");
   };
+
   const handleSkip = () => navigation.navigate("SourceOfFunds");
 
   return (
@@ -42,13 +43,16 @@ const EmiratesIdScreen = ({ navigation }) => {
       onSkip={handleSkip}
       bottom={
         <>
+          <CustomCheckbox
+            label="I agree to share this information, as it is required to collect this as a financial institution regulated by monetary Authority of UAE."
+            value={agreed}
+            onValueChange={setAgreed}
+          />
           <TouchableOpacity
-            style={{
-              backgroundColor: isValid ? colors.primary : colors.lightGray,
-              borderRadius: 60,
-              paddingVertical: 16,
-              alignItems: "center",
-            }}
+            style={[
+              styles.button,
+              { backgroundColor: isValid ? colors.primary : colors.lightGray },
+            ]}
             onPress={handleNext}
             disabled={!isValid}
           >
@@ -74,11 +78,6 @@ const EmiratesIdScreen = ({ navigation }) => {
         onChangeText={setId}
         keyboardType="number-pad"
       />
-      <CustomCheckbox
-        label="I agree to share this information, as it is required to collect this as a financial institution regulated by monetary Authority of UAE."
-        value={agreed}
-        onValueChange={setAgreed}
-      />
     </KycScreenLayout>
   );
 };
@@ -95,6 +94,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 50,
     textAlign: "center",
+  },
+  button: {
+    borderRadius: 60,
+    paddingVertical: 16,
+    alignItems: "center",
   },
 });
 

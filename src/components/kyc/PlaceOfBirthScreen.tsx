@@ -5,7 +5,6 @@ import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
 import { colors } from "../../styles/globalStyles";
-
 const PlaceOfBirthScreen = ({ navigation }) => {
   const [city, setCity] = useState("");
   const [same, setSame] = useState(false);
@@ -17,8 +16,8 @@ const PlaceOfBirthScreen = ({ navigation }) => {
     { label: "United Kingdom", value: "uk" },
     { label: "India", value: "india" },
   ]);
-  const isValid = city.trim().length > 0 && country != null;
 
+  const isValid = city.trim().length > 0 && country != null;
   const handleNext = () => navigation.navigate("EmiratesId");
   const handleSkip = handleNext;
 
@@ -32,6 +31,11 @@ const PlaceOfBirthScreen = ({ navigation }) => {
       onSkip={handleSkip}
       bottom={
         <>
+          <CustomCheckbox
+            label="Same as legal address."
+            value={same}
+            onValueChange={setSame}
+          />
           <TouchableOpacity
             style={{
               backgroundColor: isValid ? colors.primary : colors.lightGray,
@@ -43,7 +47,11 @@ const PlaceOfBirthScreen = ({ navigation }) => {
             disabled={!isValid}
           >
             <Text
-              style={{ color: colors.white, fontSize: 16, fontWeight: "600" }}
+              style={{
+                color: colors.white,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
             >
               Next
             </Text>
@@ -71,11 +79,6 @@ const PlaceOfBirthScreen = ({ navigation }) => {
         placeholder="Select your country"
         style={styles.dropdown}
         dropDownContainerStyle={styles.dropdownList}
-      />
-      <CustomCheckbox
-        label="Same as legal address."
-        value={same}
-        onValueChange={setSame}
       />
     </KycScreenLayout>
   );
