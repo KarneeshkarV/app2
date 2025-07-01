@@ -1,150 +1,101 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Alert, TouchableOpacity, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 
-const PhoneNumberScreen = ({ navigation }) => {
+const CountrySelectionScreen = ({ navigation, route }) => {
   const [open, setOpen] = useState(false);
-  const [countryCode, setCountryCode] = useState("+971");
-  const [codeItems, setCodeItems] = useState([
-    { label: "🇦🇪 +971", value: "+971" },
-    { label: "🇺🇸 +1", value: "+1" },
-    { label: "🇬🇧 +44", value: "+44" },
+  const [value, setValue] = useState<string | null>(null);
+  const [items, setItems] = useState([
+    { label: "🇦🇪 United Arab Emirates", value: "uae" },
+    { label: "🇺🇸 United States", value: "usa" },
+    { label: "🇬🇧 United Kingdom", value: "uk" },
     // …
   ]);
-  const [phone, setPhone] = useState("");
 
-  const handleNext = () => {
-    if (!phone.trim()) {
+  useEffect(() => {
+    if (route.params?.selectedCountry) {
+      setValue(route.params.selectedCountry.value);
+    }
+  }, [route.params?.selectedCountry]);
+
+  const handleConfirm = () => {
+    if (!value) {
       return Alert.alert(
-        "Please enter your phone number",
-        "You must enter a valid phone number to continue.",
+        "Please select a country",
+        "You must select your country of citizenship to continue.",
       );
     }
-    // …navigate forward
+    navigation.navigate("AddressInput", {
+      selectedCountry: items.find((i) => i.value === value),
+    });
   };
 
   return (
     <KycScreenLayout
-      step={4}
+      step={1}
       totalSteps={11}
-      title="What's your phone number?"
-      subtitle="Enter your registered phone number."
+      title="What's your country?"
+      subtitle="Select your country of citizenship"
       onBack={() => navigation.goBack()}
+      onSkip={() =>
+        navigation.navigate("AddressInput", {
+          selectedCountry: {
+            label: "🇦🇪 United Arab Emirates",
+            value: "uae",
+          },
+        })
+      }
       bottom={
         <>
           <TouchableOpacity
-            style={[
-              styles.button,
-              { backgroundColor: phone ? colors.primary : colors.lightGray },
-            ]}
-            disabled={!phone}
-            onPress={handleNext}
+            style={{
+              backgroundColor: value ? colors.primary : colors.lightGray,
+              borderRadius: 60,
+              paddingVertical: 16,
+              alignItems: "center",
+            }}
+            onPress={handleConfirm}
+            disabled={!value}
           >
             <Text
-              style={[
-                styles.buttonText,
-                { color: phone ? colors.white : colors.gray },
-              ]}
+              style={{
+                color: value ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
             >
-              Next
+              Confirm
             </Text>
           </TouchableOpacity>
           <PrivacyLink />
         </>
       }
     >
-      <View style={styles.inputRow}>
-        {/* Country Code Picker */}
-        <View style={styles.codeContainer}>
-          <DropDownPicker
-            open={open}
-            value={countryCode}
-            items={codeItems}
-            setOpen={setOpen}
-            setValue={setCountryCode}
-            setItems={setCodeItems}
-            style={styles.codePicker}
-            dropDownContainerStyle={styles.dropDownContainer}
-          />
-        </View>
-
-        {/* Phone Number Input */}
-        <TextInput
-          style={styles.phoneInput}
-          keyboardType="phone-pad"
-          placeholder="Phone Number"
-          placeholderTextColor={colors.gray}
-          value={phone}
-          onChangeText={setPhone}
-        />
-      </View>
+      <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{ nestedScrollEnabled: true }}
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        placeholder="Select your country"
+        style={{
+          backgroundColor: colors.background,
+          borderColor: colors.borderColor,
+          borderRadius: 12,
+        }}
+        dropDownContainerStyle={{
+          backgroundColor: colors.white,
+          borderColor: colors.borderColor,
+        }}
+      />
     </KycScreenLayout>
   );
 };
 
-export default PhoneNumberScreen;
-
-const styles = StyleSheet.create({
-  inputRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 24,
-  },
-  codeContainer: {
-    width: 100,
-    // ensure dropdown z‐index
-    zIndex: 1000,
-  },
-  codePicker: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    // only round left corners
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    height: 56,
-  },
-  dropDownContainer: {
-    backgroundColor: colors.white,
-    borderColor: colors.borderColor,
-  },
-  phoneInput: {
-    flex: 1,
-    height: 56,
-    backgroundColor: colors.white,
-    borderColor: colors.borderColor,
-    borderWidth: 1,
-    // remove left border so they join seamlessly
-    borderLeftWidth: 0,
-    // only round right corners
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-    paddingHorizontal: 16,
-    fontSize: 16,
-  },
-  button: {
-    borderRadius: 60,
-    paddingVertical: 16,
-    alignItems: "center",
-    marginTop: 24,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});
-
+export default CountrySelectionScreen;

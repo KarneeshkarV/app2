@@ -73,7 +73,7 @@ const IdentityVerificationScreen = ({ navigation }) => {
     <KycScreenLayout
       step={10}
       totalSteps={11}
-      title="Verify your identity with Persona"
+      title="Verify your identity"
       onBack={() => navigation.goBack()}
       onSkip={handleSkip}
       bottom={
