@@ -75,7 +75,7 @@ const EmiratesIdScreen = ({ navigation }) => {
         keyboardType="number-pad"
       />
       <CustomCheckbox
-        label="I agree to share this info as required by MAUAE."
+        label="I agree to share this information, as it is required to collect this as a financial institution regulated by monetary Authority of UAE."
         value={agreed}
         onValueChange={setAgreed}
       />

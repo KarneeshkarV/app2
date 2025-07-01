@@ -71,7 +71,7 @@ const KYCSuccessScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.getStartedButton}
               onPress={handleGetStarted}
-              activeOpacity={0.8}
+              activeOpacity={0.0}
             >
               <View style={styles.buttonContent}>
                 <Ionicons name="cash-outline" size={24} color={colors.white} />
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
   },
   thankYouText: {
     fontSize: 16,
+    marginTop: 200,
     color: colors.white,
     textAlign: "center",
     lineHeight: 24,

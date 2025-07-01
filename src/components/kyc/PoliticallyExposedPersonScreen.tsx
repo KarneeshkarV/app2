@@ -5,8 +5,11 @@ import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 
 const options = [
-  { id: "no", label: "No, I'm not a PEP." },
-  { id: "yes", label: "Yes, I or a family member are PEP." },
+  { id: "no", label: "No, I'm not a politically exposed person." },
+  {
+    id: "yes",
+    label: "Yes, a close family member or I are a politically exposed person.",
+  },
 ];
 
 const PoliticallyExposedPersonScreen = ({ navigation }) => {
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: 25,
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,

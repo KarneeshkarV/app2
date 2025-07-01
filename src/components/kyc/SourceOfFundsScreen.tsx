@@ -14,10 +14,12 @@ const sources = [
 
 const SourceOfFundsScreen = ({ navigation }) => {
   const [selected, setSelected] = useState<string[]>([]);
+
   const toggle = (id: string) =>
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
+
   const isValid = selected.length > 0;
   const handleNext = () => navigation.navigate("EmploymentStatus");
   const handleSkip = handleNext;
@@ -71,6 +73,14 @@ const SourceOfFundsScreen = ({ navigation }) => {
               ]}
               onPress={() => toggle(s.id)}
             >
+              {/* ← add the icon here */}
+              <Ionicons
+                name={s.icon}
+                size={24}
+                color={sel ? colors.primary : colors.gray}
+                style={{ marginRight: 12 }}
+              />
+
               <Text
                 style={[
                   styles.label,
@@ -79,6 +89,7 @@ const SourceOfFundsScreen = ({ navigation }) => {
               >
                 {s.label}
               </Text>
+
               <View style={[styles.radio, sel && styles.radioSelected]}>
                 {sel && (
                   <Ionicons
@@ -107,15 +118,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderColor,
   },
-  icon: {
-    width: 40,
-    height: 40,
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-    textAlign: "center",
-    textAlignVertical: "center",
-    marginRight: 12,
-  },
   label: {
     flex: 1,
     fontSize: 16,
@@ -137,3 +139,4 @@ const styles = StyleSheet.create({
 });
 
 export default SourceOfFundsScreen;
+

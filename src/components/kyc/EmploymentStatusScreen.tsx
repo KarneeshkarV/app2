@@ -71,16 +71,16 @@ const EmploymentStatusScreen = ({ navigation }) => {
             <Ionicons
               name={s.icon}
               size={20}
-              color={selected ? colors.primary : colors.white}
-              style={[
-                styles.icon,
-                selected && { backgroundColor: colors.white },
-              ]}
+              style={[selected && { backgroundColor: colors.primaryLight}]}
             />
             <Text
               style={[
                 styles.label,
-                selected && { color: colors.primary, fontWeight: "600" },
+                selected && {
+                  color: colors.primary,
+                  fontWeight: "600",
+                  marginLeft: 20,
+                },
               ]}
             >
               {s.label}
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   label: {
     flex: 1,
+    marginLeft: 20,
     fontSize: 16,
     color: colors.black,
   },
