@@ -1,56 +1,38 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { Text, TouchableOpacity, View, Alert, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { globalStyles, colors } from "../../styles/globalStyles";
-import StackedCard from "../molecules/StackedCard";
-import GradientBackground from "../molecules/GradientBackground";
+import { KycScreenLayout } from "../molecules/KycScreenLayout";
+import { PrivacyLink } from "../molecules/PrivacyLink";
+import { colors } from "../../styles/globalStyles";
 
-const DocumentVerificationItem = ({
-  title,
-  subtitle,
-  icon,
-  isCompleted,
-  onPress,
-}) => (
+const DocItem = ({ title, subtitle, icon, done, onPress }) => (
   <TouchableOpacity
-    style={[styles.documentItem, isCompleted && styles.completedItem]}
+    style={[styles.docItem, done && { borderColor: colors.primaryLight }]}
     onPress={onPress}
-    activeOpacity={0.7}
   >
-    <View style={styles.documentIconContainer}>
-      <View style={[styles.documentIcon, isCompleted && styles.completedIcon]}>
+    <View style={styles.docHeader}>
+      <View style={[styles.docIcon, done && { backgroundColor: colors.white }]}>
         <Ionicons
           name={icon}
           size={20}
-          color={isCompleted ? colors.primary : colors.white}
+          color={done ? colors.primary : colors.white}
         />
       </View>
-      <View style={styles.documentContent}>
-        <Text
-          style={[styles.documentTitle, isCompleted && styles.completedTitle]}
-        >
+      <View style={{ flex: 1 }}>
+        <Text style={[styles.docTitle, done && { color: colors.primary }]}>
           {title}
         </Text>
-        <Text style={styles.documentSubtitle}>{subtitle}</Text>
+        <Text style={styles.docSub}>{subtitle}</Text>
       </View>
     </View>
-
     <View style={styles.uploadContainer}>
-      {isCompleted ? (
-        <View style={styles.completedBadge}>
+      {done ? (
+        <View style={styles.completed}>
           <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
           <Text style={styles.uploadedText}>Uploaded</Text>
         </View>
       ) : (
-        <TouchableOpacity style={styles.uploadButton} onPress={onPress}>
+        <TouchableOpacity style={styles.uploadBtn} onPress={onPress}>
           <Ionicons
             name="cloud-upload-outline"
             size={16}
@@ -64,181 +46,82 @@ const DocumentVerificationItem = ({
 );
 
 const IdentityVerificationScreen = ({ navigation }) => {
-  const [selfieCompleted, setSelfieCompleted] = useState(false);
-  const [documentCompleted, setDocumentCompleted] = useState(false);
+  const [selfie, setSelfie] = useState(false);
+  const [doc, setDoc] = useState(false);
+  const isValid = selfie && doc;
 
-  const handleBack = () => navigation.goBack();
-
+  const handleSelfie = () =>
+    Alert.alert("Selfie Upload", "Simulate upload?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: () => setSelfie(true) },
+    ]);
+  const handleDoc = () =>
+    Alert.alert("Document Upload", "Simulate upload?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: () => setDoc(true) },
+    ]);
   const handleNext = () => {
-    if (!selfieCompleted || !documentCompleted) {
-      Alert.alert(
-        "Upload Required",
-        "Please complete both selfie and document uploads to continue.",
-      );
+    if (!isValid) {
+      Alert.alert("Upload Required", "Please complete both uploads.");
       return;
     }
     navigation.navigate("AccreditationLevel");
   };
-
-  const handleSkip = () => {
-    navigation.navigate("AccreditationLevel");
-  };
-
-  const handleSelfieUpload = () => {
-    // Simulate upload - in real app, you'd integrate with Persona SDK
-    Alert.alert(
-      "Selfie Upload",
-      "This would integrate with Persona SDK for selfie capture",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Simulate Upload",
-          onPress: () => setSelfieCompleted(true),
-        },
-      ],
-    );
-  };
-
-  const handleDocumentUpload = () => {
-    // Simulate upload - in real app, you'd integrate with Persona SDK
-    Alert.alert(
-      "Document Upload",
-      "This would integrate with Persona SDK for document capture",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Simulate Upload",
-          onPress: () => setDocumentCompleted(true),
-        },
-      ],
-    );
-  };
-
-  const isFormValid = () => selfieCompleted && documentCompleted;
+  const handleSkip = () => navigation.navigate("AccreditationLevel");
 
   return (
-    <SafeAreaView style={globalStyles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <GradientBackground>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Ionicons name="arrow-back" size={24} color={colors.white} />
-          </TouchableOpacity>
-          <Text style={styles.stepText}>Step 10/11</Text>
+    <KycScreenLayout
+      step={10}
+      totalSteps={11}
+      title="Verify your identity with Persona"
+      onBack={() => navigation.goBack()}
+      onSkip={handleSkip}
+      bottom={
+        <>
           <TouchableOpacity
-            style={styles.skipHeaderButton}
-            onPress={handleSkip}
+            style={{
+              backgroundColor: isValid ? colors.primary : colors.lightGray,
+              borderRadius: 60,
+              paddingVertical: 16,
+              alignItems: "center",
+            }}
+            onPress={handleNext}
+            disabled={!isValid}
           >
-            <Text style={styles.skipHeaderText}>Save & Skip</Text>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              {isValid ? "Next" : "Confirm"}
+            </Text>
           </TouchableOpacity>
-        </View>
-
-        <StackedCard>
-          <View style={styles.contentContainer}>
-            <View style={styles.topContent}>
-              <Text style={globalStyles.title}>
-                Verify your identity with Persona
-              </Text>
-
-              <DocumentVerificationItem
-                title="Selfie"
-                subtitle="Selfie with your front camera to verify your identity"
-                icon="person-outline"
-                isCompleted={selfieCompleted}
-                onPress={handleSelfieUpload}
-              />
-
-              <DocumentVerificationItem
-                title="Government ID Scan"
-                subtitle="Take a Passport/other government ID"
-                icon="document-text-outline"
-                isCompleted={documentCompleted}
-                onPress={handleDocumentUpload}
-              />
-            </View>
-
-            <View style={styles.bottomContent}>
-              <TouchableOpacity
-                style={[
-                  globalStyles.button,
-                  {
-                    backgroundColor: isFormValid()
-                      ? colors.primaryBtn
-                      : colors.lightGray,
-                  },
-                ]}
-                onPress={handleNext}
-                activeOpacity={0.8}
-                disabled={!isFormValid()}
-              >
-                <Text
-                  style={[
-                    globalStyles.buttonText,
-                    { color: isFormValid() ? colors.white : colors.gray },
-                  ]}
-                >
-                  {isFormValid() ? "Next" : "Confirm"}
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.privacyContainer}>
-                <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text> here about
-                  how we protect your privacy.
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </StackedCard>
-      </GradientBackground>
-    </SafeAreaView>
+          <PrivacyLink />
+        </>
+      }
+    >
+      <DocItem
+        title="Selfie"
+        subtitle="Selfie with your front camera"
+        icon="person-outline"
+        done={selfie}
+        onPress={handleSelfie}
+      />
+      <DocItem
+        title="Government ID Scan"
+        subtitle="Passport / ID card"
+        icon="document-text-outline"
+        done={doc}
+        onPress={handleDoc}
+      />
+    </KycScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 10,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  stepText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  skipHeaderButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  skipHeaderText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  topContent: {
-    flex: 1,
-  },
-  documentItem: {
+  docItem: {
     backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
@@ -246,16 +129,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderColor,
   },
-  completedItem: {
-    backgroundColor: colors.primaryLight,
-    borderColor: colors.primary,
-  },
-  documentIconContainer: {
+  docHeader: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
   },
-  documentIcon: {
+  docIcon: {
     width: 40,
     height: 40,
     backgroundColor: colors.primary,
@@ -264,29 +143,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 12,
   },
-  completedIcon: {
-    backgroundColor: colors.white,
-  },
-  documentContent: {
-    flex: 1,
-  },
-  documentTitle: {
+  docTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: colors.black,
     marginBottom: 4,
   },
-  completedTitle: {
-    color: colors.primary,
-  },
-  documentSubtitle: {
+  docSub: {
     fontSize: 14,
     color: colors.gray,
   },
   uploadContainer: {
     alignItems: "center",
   },
-  uploadButton: {
+  uploadBtn: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.white,
@@ -302,7 +172,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontWeight: "500",
   },
-  completedBadge: {
+  completed: {
     flexDirection: "row",
     alignItems: "center",
   },
@@ -310,23 +180,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.primary,
     marginLeft: 8,
-    fontWeight: "500",
-  },
-  bottomContent: {
-    paddingBottom: 20,
-    paddingTop: 20,
-  },
-  privacyContainer: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  privacyText: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: "center",
-  },
-  privacyLink: {
-    color: colors.primary,
     fontWeight: "500",
   },
 });

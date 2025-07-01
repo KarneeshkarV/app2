@@ -1,169 +1,107 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { globalStyles, colors } from "../../styles/globalStyles";
-import StackedCard from "../molecules/StackedCard";
-import GradientBackground from "../molecules/GradientBackground";
-import { SelectableListItem } from "../molecules/SelecetableListItem";
+import { KycScreenLayout } from "../molecules/KycScreenLayout";
+import { PrivacyLink } from "../molecules/PrivacyLink";
+import { colors } from "../../styles/globalStyles";
+
+const sources = [
+  { id: "income", label: "Income", icon: "briefcase-outline" },
+  { id: "investments", label: "Investments", icon: "trending-up-outline" },
+  { id: "inheritance", label: "Inheritance", icon: "people-outline" },
+  { id: "others", label: "Others", icon: "ellipsis-horizontal-outline" },
+];
 
 const SourceOfFundsScreen = ({ navigation }) => {
-  const [selectedSources, setSelectedSources] = useState([]);
-
-  const sources = [
-    { id: "income", label: "Income", icon: "briefcase-outline" },
-    { id: "investments", label: "Investments", icon: "trending-up-outline" },
-    { id: "inheritance", label: "Inheritance", icon: "people-outline" },
-    { id: "others", label: "Others", icon: "ellipsis-horizontal-outline" },
-  ];
-
-  const handleBack = () => navigation.goBack();
-
-  const handleNext = () => {
-    console.log("Selected sources:", selectedSources);
-    navigation.navigate("EmploymentStatus");
-  };
-
-  const handleSkip = () => {
-    console.log("Skip Source of Funds");
-    navigation.navigate("EmploymentStatus");
-  };
-
-  const toggleSource = (id) => {
-    setSelectedSources((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+  const [selected, setSelected] = useState<string[]>([]);
+  const toggle = (id: string) =>
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
-  };
-
-  const isFormValid = () => selectedSources.length > 0;
+  const isValid = selected.length > 0;
+  const handleNext = () => navigation.navigate("EmploymentStatus");
+  const handleSkip = handleNext;
 
   return (
-    <SafeAreaView style={globalStyles.container}>
-      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-      <GradientBackground
-        colors={[colors.primary, colors.primaryDark]}
-        style={globalStyles.gradientContainer}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Ionicons name="arrow-back" size={24} color={colors.white} />
-          </TouchableOpacity>
-          <Text style={styles.stepText}>Step 7/11</Text>
+    <KycScreenLayout
+      step={7}
+      totalSteps={11}
+      title="What's your source of funds?"
+      subtitle="Select that apply."
+      onBack={() => navigation.goBack()}
+      onSkip={handleSkip}
+      bottom={
+        <>
           <TouchableOpacity
-            style={styles.skipHeaderButton}
-            onPress={handleSkip}
+            style={{
+              backgroundColor: isValid ? colors.primary : colors.lightGray,
+              borderRadius: 60,
+              paddingVertical: 16,
+              alignItems: "center",
+            }}
+            onPress={handleNext}
+            disabled={!isValid}
           >
-            <Text style={styles.skipHeaderText}>Save & Skip</Text>
+            <Text
+              style={{
+                color: isValid ? colors.white : colors.gray,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              Confirm
+            </Text>
           </TouchableOpacity>
-        </View>
-
-        <StackedCard>
-          <View style={styles.contentContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Text style={globalStyles.title}>
-                What&apos;s your source of funds?
-              </Text>
-              <Text style={globalStyles.subtitle}>Select that apply.</Text>
-
-              {sources.map((source) => (
-                <SelectableListItem
-                  key={source.id}
-                  label={source.label}
-                  icon={source.icon}
-                  isSelected={selectedSources.includes(source.id)}
-                  onPress={() => toggleSource(source.id)}
+          <PrivacyLink />
+        </>
+      }
+    >
+      {sources.map((s) => {
+        const sel = selected.includes(s.id);
+        return (
+          <TouchableOpacity
+            key={s.id}
+            style={[
+              styles.item,
+              sel && {
+                backgroundColor: colors.primaryLight,
+                borderColor: colors.primary,
+              },
+            ]}
+            onPress={() => toggle(s.id)}
+          >
+            <Ionicons
+              name={s.icon}
+              size={20}
+              color={sel ? colors.primary : colors.white}
+              style={[styles.icon, sel && { backgroundColor: colors.white }]}
+            />
+            <Text
+              style={[
+                styles.label,
+                sel && { color: colors.primary, fontWeight: "600" },
+              ]}
+            >
+              {s.label}
+            </Text>
+            <View style={[styles.radio, sel && styles.radioSelected]}>
+              {sel && (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={colors.primary}
                 />
-              ))}
-            </ScrollView>
-
-            <View style={styles.bottomContent}>
-              <TouchableOpacity
-                style={[
-                  globalStyles.button,
-                  {
-                    backgroundColor: isFormValid()
-                      ? colors.primaryBtn
-                      : colors.lightGray,
-                  },
-                ]}
-                onPress={handleNext}
-                activeOpacity={0.8}
-                disabled={!isFormValid()}
-              >
-                <Text
-                  style={[
-                    globalStyles.buttonText,
-                    { color: isFormValid() ? colors.white : colors.gray },
-                  ]}
-                >
-                  Confirm
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.privacyContainer}>
-                <Text style={styles.privacyText}>
-                  <Text style={styles.privacyLink}>Learn more</Text> here about
-                  how we protect your privacy.
-                </Text>
-              </TouchableOpacity>
+              )}
             </View>
-          </View>
-        </StackedCard>
-      </GradientBackground>
-    </SafeAreaView>
+          </TouchableOpacity>
+        );
+      })}
+    </KycScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 10,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  stepText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  skipHeaderButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  skipHeaderText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  selectableItem: {
+  item: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.background,
@@ -173,11 +111,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderColor,
   },
-  selectableLabel: {
+  icon: {
+    width: 40,
+    height: 40,
+    backgroundColor: colors.primary,
+    borderRadius: 8,
+    textAlign: "center",
+    textAlignVertical: "center",
+    marginRight: 12,
+  },
+  label: {
+    flex: 1,
     fontSize: 16,
     color: colors.black,
-    flex: 1,
-    marginLeft: 12,
   },
   radio: {
     width: 24,
@@ -190,29 +136,6 @@ const styles = StyleSheet.create({
   },
   radioSelected: {
     borderColor: colors.primary,
-  },
-  radioInner: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: colors.primary,
-  },
-  bottomContent: {
-    paddingBottom: 20,
-    paddingTop: 20,
-  },
-  privacyContainer: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  privacyText: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: "center",
-  },
-  privacyLink: {
-    color: colors.primary,
-    fontWeight: "500",
   },
 });
 

@@ -1,6 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from "@react-navigation/stack";
 import KYCWelcomeScreen from "../components/kyc/KYCWelcomeScreen";
 import CountrySelectionScreen from "../components/kyc/CountrySelectionScreen";
 import AddressInputScreen from "../components/kyc/AddressInputScreen";
@@ -25,7 +28,8 @@ const AppNavigator = () => {
         screenOptions={{
           headerShown: false,
           gestureEnabled: true,
-          gestureDirection: "horizontal",
+          // Apply the smooth iOS-style slide animation to all screens
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       >
         <Stack.Screen name="KYCWelcome" component={KYCWelcomeScreen} />
@@ -56,7 +60,15 @@ const AppNavigator = () => {
           name="AccreditationLevel"
           component={AccreditationLevelScreen}
         />
-        <Stack.Screen name="KYCSuccess" component={KYCSuccessScreen} />
+        {/* Special transition for the final success screen */}
+        <Stack.Screen
+          name="KYCSuccess"
+          component={KYCSuccessScreen}
+          options={{
+            ...TransitionPresets.ModalSlideFromBottomIOS,
+            gestureDirection: "vertical", // Match gesture to animation
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
