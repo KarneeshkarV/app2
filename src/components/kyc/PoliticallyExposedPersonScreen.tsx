@@ -4,6 +4,7 @@ import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
+import { useKyc } from "../../context/KYCContext";
 
 const accreditationOptions = [
   {
@@ -21,11 +22,15 @@ const accreditationOptions = [
 ];
 
 const AccreditationLevelScreen = ({ navigation }) => {
+  const { data } = useKyc();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [acc, setAcc] = useState(false);
   const isValid = selectedOption !== null || acc;
 
-  const handleNext = () => navigation.navigate("KYCSuccess");
+  const handleNext = () => {
+    console.log("KYC Data:", data);
+    navigation.navigate("KYCSuccess");
+  };
   const handleSkip = handleNext;
 
   // pick an option → clear UAE checkbox

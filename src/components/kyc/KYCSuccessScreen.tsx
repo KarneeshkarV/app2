@@ -12,7 +12,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { SvgXml } from "react-native-svg";
 import { globalStyles, colors } from "../../styles/globalStyles";
 import GradientBackground from "../molecules/GradientBackground";
-import { useKyc } from "../../context/KYCContext";
 
 const { width } = Dimensions.get("window");
 
@@ -41,10 +40,8 @@ const CelebrationIcon = ({ size = 120 }) => {
 };
 
 const KYCSuccessScreen = ({ navigation }) => {
-  const { data } = useKyc();
   const handleGetStarted = () => {
     // Navigate to main app or dashboard
-    console.log("KYC data:", JSON.stringify(data));
     // You can navigate to your main app screen here
     navigation.popToTop();
   };

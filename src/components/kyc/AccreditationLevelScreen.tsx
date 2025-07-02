@@ -5,7 +5,7 @@ import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
-
+import { useKyc } from "../../context/KYCContext";
 const accreditationOptions = [
   {
     id: "income",
@@ -28,7 +28,9 @@ const AccreditationLevelScreen = ({ navigation }) => {
   // valid if exactly one accreditation is selected
   const isValid = selectedOption !== null || acc;
 
+  const { data } = useKyc();
   const handleNext = () => {
+    console.log("KYC data:", JSON.stringify(data));
     navigation.navigate("KYCSuccess");
   };
 
