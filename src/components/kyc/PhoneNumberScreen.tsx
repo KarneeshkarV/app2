@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
@@ -75,20 +76,24 @@ const PhoneNumberScreen = ({ navigation }) => {
       }
     >
       <View style={styles.phoneContainer}>
-        <DropDownPicker
-          listMode="SCROLLVIEW"
-          scrollViewProps={{ nestedScrollEnabled: true }}
-          open={open}
-          value={countryCode}
-          items={items}
-          setOpen={setOpen}
-          setValue={setCountryCode}
-          setItems={setItems}
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          labelStyle={styles.dropdownLabel}
-          dropDownContainerStyle={styles.dropdownList}
-        />
+        <View style={styles.dropdownWrapper}>
+          <DropDownPicker
+            listMode="SCROLLVIEW"
+            open={open}
+            value={countryCode}
+            items={items}
+            setOpen={setOpen}
+            setValue={setCountryCode}
+            setItems={setItems}
+            containerStyle={styles.dropdownContainer}
+            style={styles.dropdown}
+            labelStyle={styles.dropdownLabel}
+            dropDownContainerStyle={styles.dropdownList}
+            dropDownDirection="BOTTOM"
+            // remove maxHeight prop here—handled in dropDownContainerStyle
+          />
+        </View>
+
         <TextInput
           style={styles.phoneInput}
           placeholder="Phone Number"
@@ -106,31 +111,65 @@ const styles = StyleSheet.create({
   phoneContainer: {
     flexDirection: "row",
     marginVertical: 20,
+    alignItems: "center",
+    // allow children to overflow
+    overflow: "visible",
+    zIndex: 1,
+  },
+  dropdownWrapper: {
+    width: 120,
+    // allow the dropdown to render outside the wrapper
+    overflow: "visible",
+    zIndex: 2000,
+    ...Platform.select({
+      android: { elevation: 5 },
+    }),
+  },
+  dropdownContainer: {
     height: 50,
-    borderRadius: 100,
     borderWidth: 1,
     borderColor: colors.borderColor,
-    overflow: "hidden",
+    borderRadius: 100,
+    overflow: "visible",
   },
-  dropdownContainer: { width: 120 },
   dropdown: {
     backgroundColor: colors.background,
     borderWidth: 0,
-    borderRightWidth: 1,
-    borderRightColor: colors.borderColor,
   },
-  dropdownLabel: { fontSize: 16, color: colors.black },
+  dropdownLabel: {
+    fontSize: 16,
+    color: colors.black,
+  },
   dropdownList: {
+    // float absolutely below the pill
+    position: "absolute",
+    top: 54, // 50 (pill height) + 4 spacing
+    left: 0,
+    width: 120,
+    maxHeight: 200,
+    borderRadius: 8,
     backgroundColor: colors.white,
+    borderWidth: 1,
     borderColor: colors.borderColor,
+    zIndex: 3,
+    ...Platform.select({
+      android: { elevation: 6 },
+    }),
   },
   phoneInput: {
     flex: 1,
+    height: 50,
+    marginLeft: 8,
     paddingHorizontal: 16,
     fontSize: 16,
     color: colors.black,
     backgroundColor: colors.background,
+    borderWidth: 1,
+    borderColor: colors.borderColor,
+    borderRadius: 100,
+    zIndex: 1,
   },
 });
 
 export default PhoneNumberScreen;
+
