@@ -4,8 +4,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
+import { useKyc } from "../../context/KYCContext";
 
 const CountrySelectionScreen = ({ navigation, route }) => {
+  const { updateKycData } = useKyc();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string | null>(null);
   const [items, setItems] = useState([
@@ -28,7 +30,11 @@ const CountrySelectionScreen = ({ navigation, route }) => {
         "You must select your country of citizenship to continue.",
       );
     }
-    navigation.navigate("AddressInput", {
+    updateKycData(
+      "selectedCountry",
+      items.find((i) => i.value === value)?.label,
+    );
+    navigation.navigate("LegalAddress", {
       selectedCountry: items.find((i) => i.value === value),
     });
   };
@@ -41,7 +47,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
       subtitle="Select your country of citizenship"
       onBack={() => navigation.goBack()}
       onSkip={() =>
-        navigation.navigate("AddressInput", {
+        navigation.navigate("LegalAddress", {
           selectedCountry: {
             label: "🇦🇪 United Arab Emirates",
             value: "uae",
@@ -53,7 +59,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={{
               backgroundColor: value ? colors.primary : colors.lightGray,
-              borderRadius: 60,
+              borderRadius: 100,
               paddingVertical: 16,
               alignItems: "center",
             }}
@@ -83,11 +89,11 @@ const CountrySelectionScreen = ({ navigation, route }) => {
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
-        placeholder="Select your country"
+        placeholder="    Select your country"
         style={{
           backgroundColor: colors.background,
           borderColor: colors.borderColor,
-          borderRadius: 12,
+          borderRadius: 100,
         }}
         dropDownContainerStyle={{
           backgroundColor: colors.white,

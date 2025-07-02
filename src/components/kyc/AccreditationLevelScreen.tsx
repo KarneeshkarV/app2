@@ -6,48 +6,62 @@ import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
 
+const accreditationOptions = [
+  {
+    id: "income",
+    label: "My income was $300,000+ in last 12 months.",
+  },
+  {
+    id: "financial",
+    label: "My financial assets exceeds $1 million.",
+  },
+  {
+    id: "personal",
+    label: "My personal assets (incl. property) exceed $2 million.",
+  },
+];
+
 const AccreditationLevelScreen = ({ navigation }) => {
-  const [inc, setInc] = useState(false);
-  const [fin, setFin] = useState(false);
-  const [pers, setPers] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [acc, setAcc] = useState(false);
-  const isValid = inc || fin || pers || acc;
+
+  // valid if exactly one accreditation is selected
+  const isValid = selectedOption !== null || acc;
 
   const handleNext = () => {
     navigation.navigate("KYCSuccess");
   };
-  const handleSkip = handleNext;
 
-  const Item = ({ label, value, onChange }) => (
-    <TouchableOpacity
-      style={styles.chkContainer}
-      onPress={() => onChange(!value)}
-    >
-      <View style={[styles.chk, value && styles.chkChecked]}>
-        {value && <Ionicons name="checkmark" size={16} color={colors.white} />}
-      </View>
-      <Text style={styles.chkLabel}>{label}</Text>
-    </TouchableOpacity>
-  );
+  // when a radio option is picked, clear the checkbox
+  const selectOption = (optionId) => {
+    setSelectedOption(optionId);
+    setAcc(false);
+  };
+
+  // when the checkbox toggles on, clear any radio choice
+  const handleAccChange = (value) => {
+    setAcc(value);
+    if (value) setSelectedOption(null);
+  };
 
   return (
     <KycScreenLayout
       step={11}
       totalSteps={11}
       title="What's your accreditation level?"
-      subtitle="Select all that apply."
+      subtitle="Select one that applies."
       onBack={() => navigation.goBack()}
-      onSkip={handleSkip}
+      onSkip={handleNext}
       bottom={
         <>
           <CustomCheckbox
             label="I am an accredited investor under the MAUAE."
             value={acc}
-            onValueChange={setAcc}
+            onValueChange={handleAccChange}
           />
           <TouchableOpacity
             style={{
-              backgroundColor: isValid ? colors.primaryBtn : colors.lightGray,
+              backgroundColor: isValid ? colors.primary : colors.lightGray,
               borderRadius: 60,
               paddingVertical: 16,
               alignItems: "center",
@@ -69,57 +83,73 @@ const AccreditationLevelScreen = ({ navigation }) => {
         </>
       }
     >
-      <Item
-        label="My income was $300,000+ in last 12 months."
-        value={inc}
-        onChange={setInc}
-      />
-      <Item
-        label="My financial assets exceeds $1 million."
-        value={fin}
-        onChange={setFin}
-      />
-      <Item
-        label="My personal assets (incl. property) exceed $2 million."
-        value={pers}
-        onChange={setPers}
-      />
+      {accreditationOptions.map((option) => {
+        const selected = selectedOption === option.id;
+        return (
+          <TouchableOpacity
+            key={option.id}
+            style={[
+              styles.item,
+              selected && {
+                backgroundColor: colors.primaryLight,
+                borderColor: colors.primary,
+              },
+            ]}
+            onPress={() => selectOption(option.id)}
+          >
+            <Text
+              style={[
+                styles.label,
+                selected && {
+                  color: colors.primary,
+                  fontWeight: "600",
+                  marginLeft: 20,
+                },
+              ]}
+            >
+              {option.label}
+            </Text>
+            <View style={[styles.radio, selected && styles.radioSelected]}>
+              {selected && (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={colors.primary}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+        );
+      })}
     </KycScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  chkContainer: {
+  item: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    alignItems: "center",
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: 100,
+    padding: 16,
+    marginBottom: 12,
     borderWidth: 1,
     borderColor: colors.borderColor,
   },
-  chk: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: colors.lightGray,
-    marginRight: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 2,
-  },
-  chkChecked: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-  },
-  chkLabel: {
+  label: {
+    flex: 1,
+    marginLeft: 20,
     fontSize: 16,
     color: colors.black,
-    flex: 1,
-    lineHeight: 22,
+  },
+  radio: {
+    width: 24,
+    height: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  radioSelected: {
+    // only shows the checkmark
   },
 });
 

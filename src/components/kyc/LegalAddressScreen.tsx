@@ -9,8 +9,10 @@ import {
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
+import { useKyc } from "../../context/KYCContext";
 
 const LegalAddressScreen = ({ navigation }) => {
+  const { updateKycData } = useKyc();
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [stateField, setStateField] = useState("");
@@ -26,6 +28,7 @@ const LegalAddressScreen = ({ navigation }) => {
       );
       return;
     }
+    updateKycData("address", { street, city, state: stateField, zipCode });
     navigation.navigate("Birthday");
   };
   const handleSkip = () => navigation.navigate("Birthday");
@@ -103,7 +106,7 @@ const LegalAddressScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: 100,
     padding: 16,
     fontSize: 16,
     color: colors.black,

@@ -87,7 +87,7 @@ const PlaceOfBirthScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: 100,
     padding: 16,
     fontSize: 16,
     color: colors.black,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderColor: colors.borderColor,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 100,
     minHeight: 50,
     marginBottom: 20,
   },

@@ -6,7 +6,6 @@ import {
 } from "@react-navigation/stack";
 import KYCWelcomeScreen from "../components/kyc/KYCWelcomeScreen";
 import CountrySelectionScreen from "../components/kyc/CountrySelectionScreen";
-import AddressInputScreen from "../components/kyc/AddressInputScreen";
 import LegalAddressScreen from "../components/kyc/LegalAddressScreen";
 import BirthdayScreen from "../components/kyc/BirthdayScreen";
 import PhoneNumberScreen from "../components/kyc/PhoneNumberScreen";
@@ -37,7 +36,6 @@ const AppNavigator = () => {
           name="CountrySelection"
           component={CountrySelectionScreen}
         />
-        <Stack.Screen name="AddressInput" component={AddressInputScreen} />
         <Stack.Screen name="LegalAddress" component={LegalAddressScreen} />
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
         <Stack.Screen name="PhoneNumber" component={PhoneNumberScreen} />

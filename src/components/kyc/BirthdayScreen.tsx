@@ -10,8 +10,10 @@ import {
 import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { colors } from "../../styles/globalStyles";
+import { useKyc } from "../../context/KYCContext";
 
 const BirthdayScreen = ({ navigation }) => {
+  const { updateKycData } = useKyc();
   const [dob, setDob] = useState({ day: "", month: "", year: "" });
   const isValid =
     dob.day.length > 0 && dob.month.length > 0 && dob.year.length > 0;
@@ -35,6 +37,7 @@ const BirthdayScreen = ({ navigation }) => {
       Alert.alert("Invalid Date", "Please enter a valid date of birth.");
       return;
     }
+    updateKycData("dob", dob);
     navigation.navigate("PhoneNumber");
   };
   const handleSkip = () => navigation.navigate("PhoneNumber");

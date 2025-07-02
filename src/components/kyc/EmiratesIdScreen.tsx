@@ -85,7 +85,7 @@ const EmiratesIdScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.background,
-    borderRadius: 12,
+    borderRadius: 100,
     padding: 16,
     fontSize: 16,
     color: colors.black,

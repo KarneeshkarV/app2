@@ -11,8 +11,10 @@ import { KycScreenLayout } from "../molecules/KycScreenLayout";
 import { PrivacyLink } from "../molecules/PrivacyLink";
 import { CustomCheckbox } from "../molecules/CustomCheckBox";
 import { colors } from "../../styles/globalStyles";
+import { useKyc } from "../../context/KYCContext";
 
 const PhoneNumberScreen = ({ navigation }) => {
+  const { updateKycData } = useKyc();
   const [phone, setPhone] = useState("");
   const [same, setSame] = useState(false);
   const [whatsapp, setWhatsapp] = useState(false);
@@ -26,7 +28,10 @@ const PhoneNumberScreen = ({ navigation }) => {
   ]);
 
   const isValid = phone.trim().length > 5;
-  const handleNext = () => navigation.navigate("PlaceOfBirth");
+  const handleNext = () => {
+    updateKycData("phone", `${countryCode}${phone}`);
+    navigation.navigate("PlaceOfBirth");
+  };
   const handleSkip = handleNext;
 
   return (
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 20,
     height: 50,
-    borderRadius: 12,
+    borderRadius: 100,
     borderWidth: 1,
     borderColor: colors.borderColor,
     overflow: "hidden",

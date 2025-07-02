@@ -1,4 +1,3 @@
-// src/components/kyc/KYCWelcomeScreen.tsx
 import React from "react";
 import {
   View,
@@ -17,7 +16,7 @@ import StackedCard from "../molecules/StackedCard";
 import GradientBackground from "../molecules/GradientBackground";
 
 const { width, height } = Dimensions.get("window");
-// match StackedCard’s SHEET_RADIUS
+// match StackedCard's SHEET_RADIUS
 const BLUR_CARD_RADIUS = 28;
 
 const ShieldCheckIcon = ({ width = 180, height = 180 }) => {
@@ -107,10 +106,10 @@ const KYCWelcomeScreen = ({ navigation }) => {
 
         {/* Logo */}
         <View style={styles.logoContainer}>
-          {/* … your ShieldCheckIcon … */}
+          <BlurView intensity={20} tint="light" style={styles.logoWrapper}>
+            <ShieldCheckIcon />
+          </BlurView>
         </View>
-
-        {/* ←— our blurred “behind” card */}
         <BlurView
           pointerEvents="none"
           intensity={40}
@@ -130,7 +129,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
 
             {/* Documents list */}
             <View style={styles.topContent}>
-              <Text style={globalStyles.title}>Let’s Verify KYC</Text>
+              <Text style={globalStyles.title}>Let's Verify KYC</Text>
               <Text style={globalStyles.subtitle}>
                 Keep the following documents ready
               </Text>
@@ -157,7 +156,7 @@ const KYCWelcomeScreen = ({ navigation }) => {
                 onPress={handleStartKYC}
                 activeOpacity={0.8}
               >
-                <Text style={globalStyles.buttonText}>Let’s Start</Text>
+                <Text style={globalStyles.buttonText}>Let's Start</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -187,10 +186,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 40,
   },
+  logoWrapper: {
+    width: 160,
+    height: 160,
+    borderRadius: 110, // Half of width/height to make it perfectly round
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden", // Ensures the blur effect stays within the circular bounds
+  },
   behindCard: {
     position: "absolute",
-    top: 355, // a bit above the main card’s topOffset (370)
-    left: 12, // inset so it’s slightly narrower
+    top: 355, // a bit above the main card's topOffset (370)
+    left: 12, // inset so it's slightly narrower
     right: 12,
     bottom: 0, // stretch down to bottom
     borderRadius: BLUR_CARD_RADIUS,
@@ -227,4 +234,3 @@ const styles = StyleSheet.create({
 });
 
 export default KYCWelcomeScreen;
-
