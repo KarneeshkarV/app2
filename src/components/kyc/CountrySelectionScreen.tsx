@@ -37,7 +37,7 @@ const CountrySelectionScreen = ({ navigation, route }) => {
     <KycScreenLayout
       step={1}
       totalSteps={11}
-      title="What's your country?"
+      topOffset={10}      title="What's your country?"
       subtitle="Select your country of citizenship"
       onBack={() => navigation.goBack()}
       onSkip={() =>

@@ -14,14 +14,14 @@ import StackedCard from "./StackedCard";
 import { globalStyles, colors } from "../../styles/globalStyles";
 
 interface Props {
-  step?: number; // e.g. 3
-  totalSteps?: number; // e.g. 11
-  title: string; // screen title
-  subtitle?: string; // optional subtitle
-  onBack: () => void; // goBack
-  onSkip?: () => void; // optional Save & Skip
-  children: ReactNode; // form fields
-  bottom: ReactNode; // Next / Confirm button + privacy link
+  step?: number;
+  totalSteps?: number;
+  title: string;
+  subtitle?: string;
+  onBack: () => void;
+  onSkip?: () => void;
+  children: ReactNode;
+  bottom: ReactNode;
 }
 
 export const KycScreenLayout: React.FC<Props> = ({
@@ -33,44 +33,54 @@ export const KycScreenLayout: React.FC<Props> = ({
   onSkip,
   children,
   bottom,
-}) => (
-  <SafeAreaView style={globalStyles.container}>
-    <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
-    <GradientBackground>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={onBack} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color={colors.white} />
-        </TouchableOpacity>
-        {step != null && totalSteps != null && (
-          <Text style={styles.stepText}>
-            Step {step}/{totalSteps}
-          </Text>
-        )}
-        {onSkip && (
-          <TouchableOpacity onPress={onSkip} style={styles.skipHeaderButton}>
-            <Text style={styles.skipHeaderText}>Save & Skip</Text>
+}) => {
+  // normalize to [0,1]
+  const progress =
+    step != null && totalSteps != null && totalSteps > 0
+      ? step / totalSteps
+      : undefined;
+
+  return (
+    <SafeAreaView style={globalStyles.container}>
+      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
+      <GradientBackground>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={onBack} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color={colors.white} />
           </TouchableOpacity>
-        )}
-      </View>
-
-      <StackedCard>
-        <View style={styles.cardContent}>
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-          >
-            <Text style={globalStyles.title}>{title}</Text>
-            {subtitle && <Text style={globalStyles.subtitle}>{subtitle}</Text>}
-            {children}
-          </ScrollView>
-
-          {bottom}
+          {step != null && totalSteps != null && (
+            <Text style={styles.stepText}>
+              Step {step}/{totalSteps}
+            </Text>
+          )}
+          {onSkip && (
+            <TouchableOpacity onPress={onSkip} style={styles.skipHeaderButton}>
+              <Text style={styles.skipHeaderText}>Save & Skip</Text>
+            </TouchableOpacity>
+          )}
         </View>
-      </StackedCard>
-    </GradientBackground>
-  </SafeAreaView>
-);
+
+        <StackedCard progress={progress}>
+          <View style={styles.cardContent}>
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+            >
+              <Text style={globalStyles.title}>{title}</Text>
+              {subtitle && (
+                <Text style={globalStyles.subtitle}>{subtitle}</Text>
+              )}
+              {children}
+            </ScrollView>
+
+            {bottom}
+          </View>
+        </StackedCard>
+      </GradientBackground>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   header: {
